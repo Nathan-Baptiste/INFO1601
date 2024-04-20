@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/cfadc1c69f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Sidebar Navigation Bar Code -->
+    <section>
+        <div id="mySidenav" class="sidenav">
+            <h2>Menu</h2>
+            <ul>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="#categories" onclick="closeNav()"><i class="fa-solid fa-list"></i></i> Categories</a></li>
+                <li><a href="#random-recipe" onclick="closeNav()"><i class="fa-solid fa-book"></i> Random Recipes</a></li>
+                <li><a href="#about-us" onclick="closeNav()"><i class="fa-regular fa-address-card"></i> About Us</a></li>
+            </ul>
+        </div>
+    </section>
+  
+    <script src="js/script.js"></script>
+</body>
+
+<body>
+  <!-- Insert this script at the bottom of the HTML, but before you use any Firebase services -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js'
+
+    // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js'
+
+    // Add Firebase products that you want to use
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js'
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js'
+  </script>
+</body>
+
+<body>
+  <script type="module">
+    // ...
+
+    // TODO: Replace the following with your app's Firebase project configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCd_8GDxMdjp3x7HmFZmooCp9fRNl_Dlc",
+      authDomain: "just-bytes-b0225.firebaseapp.com",
+      projectId: "just-bytes-b0225",
+      storageBucket: "just-bytes-b0225.appspot.com",
+      messagingSenderId: "831944650354",
+      appId: "1:831944650354:web:f428ccf04f931bfa51dceb"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+</body>
+</html>
