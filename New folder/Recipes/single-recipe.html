@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Recipe</title>
+  <link href="recipes.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/menu (1).png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <!-- Side Navigation Bar -->
+  <section>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/Home.html">Home</a>
+    </div>
+  </section>
+
+  <!-- Top Navigation Bar -->
+  <section id="Home">
+    <div class="topnav">
+      <span class="menu-icon" onclick="openNav()">&#9776;</span>
+      <img class="logo" src="/JustBytes.png" alt="Logo">
+      <div class="search-container">
+        <form id="searchForm">
+          <input type="text" id="searchInput" placeholder="Search for recipes...">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Your HTML content for the single recipe page -->
+    <div class="recipe-details-container">
+      <!-- Recipe details will be displayed here -->
+    </div>
+  </main>
+
+  <script src="./Search/search-results.js"></script>
+  <script src="/script.js"></script>
+  <script>
+    //To switch API Keys, press Ctrl+H and replace the API key with the new one.
+    //Current API Key = 57c390284c954535a88454a4d30c0966
+    
+    //========================= SINGLE RECIPES ========================= 
+
+    // Extract the recipe ID from the URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const recipeId = urlParams.get('id');
+
+    // Fetch recipe information from the Spoonacular API
+    async function fetchRecipeInformation(recipeId) {
+      const apiKey = '57c390284c954535a88454a4d30c0966'; // Replace with your API key
+      const apiUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // Check if the fetched recipe ID matches the requested ID
+        if (data.id == recipeId) {
+          displayRecipeInformation(data);
+        } else {
+          console.error('Invalid recipe ID:', recipeId);
+        }
+      } catch (error) {
+        console.error('Error fetching recipe information:', error);
+      }
+    }
+
+    //========================= DISPLAY ON PAGE ========================= 
+
+    function displayRecipeInformation(recipe) {
+      const recipeContainer = document.querySelector('.recipe-details-container');
+      const summaryWithoutLinks = recipe.summary.replace(/<a\b[^>]*>(.*?)<\/a>/gi, '$1'); // Remove links from summary
+      const html = `
+          <div class="recipe-details">
+            <div id="recipe-name"> <h1>${recipe.title}</h1> </div>
+
+            <section class="left-column">
+            <div id="recipe-image">
+              <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='PlaceholderRand.png'; this.alt='Placeholder Image'">
+            </div>
+
+            <div id="summary">
+              <h2> Summary </h2>
+              <p>${summaryWithoutLinks}</p>
+            </div>
+
+
+            <div id="ingredients">
+              <h2> Ingredients </h2>
+              <ul>
+                ${recipe.extendedIngredients.map(ingredient => `<li>${ingredient.original || 'N/A'}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div id="instructions">
+              <h2>Instructions:</h2>
+              <ol>
+                ${recipe.analyzedInstructions[0].steps.map(step => `<li>${step.step}</li>`).join('')}
+              </ol>
+            </div>
+            </section>
+
+            <section class="right-column">
+            <div id="additional-info">
+              <h2>Additional Information</h2>
+                <div id="taste-info">
+                  <h3>Taste:</h3>
+                    <ul>
+                      <li>Sweetness: ${recipe.taste.sweetness || 'N/A'}</li>
+                      <li>Saltiness: ${recipe.taste.saltiness || 'N/A'}</li>
+                      <li>Sourness: ${recipe.taste.sourness || 'N/A'}</li>
+                      <li>Bitterness: ${recipe.taste.bitterness || 'N/A'}</li>
+                      <li>Savoriness: ${recipe.taste.savoriness || 'N/A'}</li>
+                      <li>Fattiness: ${recipe.taste.fattiness || 'N/A'}</li>
+                      <li>Spiciness: ${recipe.taste.spiciness || 'N/A'}</li>
+                    </ul>
+                  </div>
+
+                <div id="diet-info">
+                <h3>Dietary Information</h3>
+                <p>Diets: ${recipe.diets.length > 0 ? recipe.diets.join(', ') : 'N/A'}</p>
+                <p>Cuisines: ${recipe.cuisines.length > 0 ? recipe.cuisines.join(', ') : 'N/A'}</p>
+                <p>Vegetarian: ${recipe.vegetarian ? 'YES' : 'NO'}</p>
+                <p>Vegan: ${recipe.vegan ? 'YES' : 'NO'}</p>
+                <p>Gluten Free: ${recipe.glutenFree ? 'YES' : 'NO'}</p>
+                <p>Dairy Free: ${recipe.dairyFree ? 'YES' : 'NO'}</p>
+                <p>Very Healthy: ${recipe.veryHealthy ? 'YES' : 'NO'}</p>
+                <p>Weight Watcher Smart Points: ${recipe.weightWatcherSmartPoints || 'N/A'}</p>
+                <p>Health Score: ${recipe.healthScore || 'N/A'}</p>
+              </ul>
+            </div>
+          </div>
+          
+            <div id="info">
+              <p>Ready in Minutes: ${recipe.readyInMinutes}</p>
+              <p>Servings: ${recipe.servings}</p>
+            </div>
+          </section>
+        `;;
+      recipeContainer.innerHTML = html;
+    }
+
+    // Call fetchRecipeInformation when the page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchRecipeInformation(recipeId);
+    });
+
+    //========================= SEARCHING ========================= 
+
+    // Handle search form submission
+    document.getElementById('searchForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent default form submission
+      const query = document.getElementById('searchInput').value.trim();
+      if (query) {
+        const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=57c390284c954535a88454a4d30c0966&query=${query}`;
+        window.location.href = `../Search/search-results.html?q=${encodeURIComponent(query)}`;
+      }
+    });
+  </script>
+</body>
+
+</html>

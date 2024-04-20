@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Finder</title>
+  <link rel="icon" type="image/x-icon" href="/menu (1).png">
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/cfadc1c69f.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- Side Navigation Bar -->
+  <section>
+    <div id="mySidenav" class="sidenav">
+      <h2>Menu</h2>
+      <ul>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <li><a href="Home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#categories" onclick="closeNav()"><i class="fa-solid fa-list"></i></i> Categories</a></li>
+        <li><a href="#random-recipe" onclick="closeNav()"><i class="fa-solid fa-book"></i> Random Recipes</a></li>
+        <li><a href="#about-us" onclick="closeNav()"><i class="fa-regular fa-address-card"></i> About Us</a></li>
+      </ul>
+      <!-- <div class="base">
+        <p>&copy; 2024 JUST BYTES.</p>
+      </div> -->
+    </div>
+
+
+  </section>
+
+  <!-- Top Navigation Bar -->
+  <section id="Home">
+    <div class="topnav">
+      <span class="menu-icon" onclick="openNav()">&#9776;</span>
+      <img class="logo" src="JustBytes.png" alt="Logo">
+      <div class="search-container">
+        <form id="searchForm">
+          <input type="text" id="searchInput" placeholder="Search for recipes...">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Popular Recipes Slideshow -->
+      <h1 class="pop-rec">Popular Recipes</h1>
+    <section class="slideshow">
+      <div class="slideshow-container">
+        <div class="mySlides fade">
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories">
+      <h1>Categories</h1>
+      <div class="card-container">
+
+        <!-- Category 1 -->
+        <div class="card" data-type="breakfast">
+          <img src="CategoryCardImages/breakfast.jpg" style="width:100%">
+          <div class="container">
+            <h2>Breakfast</h2>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="card" data-type="appetizer">
+          <img src="CategoryCardImages/Appetizer.jpg" style="width:100%" class="appetizer">
+          <div class="container">
+            <h2>Appetizers</h2>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="card" data-type="main course">
+          <img src="CategoryCardImages/MainCourse.jpg" style="width:100%">
+          <div class="container">
+            <h2>Main Courses</h2>
+          </div>
+        </div>
+      
+      <!-- Category 4 -->
+      <div class="card" data-type="side dish">
+        <img src="CategoryCardImages/SideDish.jpg" style="width:100%">
+        <div class="container">
+          <h2>Side Dishes</h2>
+        </div>
+      </div>
+
+      <!-- Category 5 -->
+      <div class="card" data-type="dessert">
+        <img src="CategoryCardImages/Dessert.jpg" style="width:100%">
+        <div class="container">
+          <h2>Desserts</h2>
+        </div>
+      </div>
+
+      <!-- Category 6 -->
+      <div class="card" data-type="drink">
+        <img src="CategoryCardImages/Drinks.jpg" style="width:100%">
+        <div class="container">
+          <h2>Drinks</h2>
+        </div>
+      </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- Category Recipes Container -->
+    <section class="category-recipes-container" id="categories-card-container">
+      <!-- Category recipes will be dynamically inserted here -->
+    </section>
+
+    <!-- Random Recipes -->
+    <section class="random-recipe" id="random-recipe">
+      <h1> Get a Random Recipe </h1>
+      <p>Don't know what to eat? No probem. Try a random recipe!</p>
+      <button onclick="getRandomRecipe()"> Generate Random Recipe </button>
+      <div class="recipe-container">
+      </div>
+    </section>
+
+    <!-- About Us -->
+    <div class="about-us">
+      <header>
+        <h2> About Us </h2>
+      </header>
+
+      <section class="columns">
+        <div class="column">
+          <h2>Meet the team</h2>
+          <h4>CTRL INTELLIGENCE</h4>
+          <p>We are Ctrl Intelligence! Our project aims to create an efficient method for obtaining recipe information.</p>
+          <p> <b>Our Team Members:</b> Nathan Baptiste, Sangeeta Santokee, Vinai Ramadhin & Rondell Scott.</p>
+          </ul>
+        </div>
+        <div class="column">
+          <h2>Powered by Spoonacular API</h2>
+          <p>Spoonacular API is a comprehensive database of food-related information. </p>
+          <p>It offers over 5,000 recipes and provides several useful functions as frameworks for immersive websites!</p>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 JUST BYTES. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <link href="results.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/menu (1).png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <!-- Side Navigation Bar -->
+  <section>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/Home.html">Home</a>
+    </div>
+  </section>
+
+  <!-- Top Navigation Bar -->
+  <section id="Home">
+    <div class="topnav">
+      <span class="menu-icon" onclick="openNav()">&#9776;</span>
+      <img class="logo" src="/JustBytes.png" alt="Logo">
+      <div class="search-container">
+        <form id="searchForm">
+          <input type="text" id="searchInput" placeholder="Search for recipes...">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <h1>Search Results</h1>
+    <div class="search-results-container">
+      <!-- Search results will be dynamically inserted here -->
+    </div>
+  </main>
+
+  <script src="./Search/search-results.js"></script>
+  <script src="/script.js"></script>
+  <script>
+    //To switch API Keys, press Ctrl+H and replace the API key with the new one.
+    //Current API Key = 57c390284c954535a88454a4d30c0966
+
+
+    //========================= DISPLAY SEARCH RESULTS ========================= 
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Fetch and display search results
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('q');
+      if (query) {
+        const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=57c390284c954535a88454a4d30c0966&query=${query}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        displaySearchResults(data.results);
+      }
+    });
+
+    function displaySearchResults(results) {
+      const container = document.querySelector('.search-results-container');
+      let html = '';
+
+      if (results.length === 0) {
+        html = `<p>No results found.</p>`;
+      } else {
+        results.forEach(recipe => {
+          html += `
+            <div class="recipe-card">
+            <div class="rand-columns-container">
+              <div class="rand-column">
+                <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='PlaceholderRand.png'; this.alt='Placeholder Image'">
+                <h2>${recipe.title}</h2>
+                <button class="view-recipe-btn" data-id="${recipe.id}"> View Recipe </button>
+              </div>
+            <div>
+            </div>
+          `;
+        });
+      }
+
+      container.innerHTML = html;
+
+      //========================= VIEW RECIPES ========================= 
+
+      document.querySelectorAll('.view-recipe-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const recipeId = button.getAttribute('data-id');
+          window.location.href = `../Recipes/single-recipe.html?id=${recipeId}`;
+        });
+      });
+    }
+
+    //========================= SEARCHING ========================= 
+
+    document.getElementById('searchForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const query = document.getElementById('searchInput').value.trim();
+      if (query) {
+        const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=57c390284c954535a88454a4d30c0966&query=${query}`;
+        window.location.href = `./search-results.html?q=${encodeURIComponent(query)}`;
+      }
+    });
+  </script>
+</body>
+
+</html>
